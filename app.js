@@ -18,7 +18,7 @@ var productRank = {
   // NOTE: A-C-P reminder... Make very intentional and iterative changes to your code, and then A-C-P.
 
   getRandomIndex: function() {
-    // TODO: Hmm... what's going to happen here?
+    return (math.random() * ((parseInt(allProducts.length) - 1) +1)
   },
 
   displayImages: function() {
