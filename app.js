@@ -4,30 +4,37 @@ var allProducts = []; //this is where the objects are stored
 var productNames = []; // this will create my results list
 var allImages = []; //this will create an array of images
 
-function Product(name, path, id) {
+function Product(name, path) {
   this.name = name;
   this.path = "img/" + path;
   this.totalClick = 0;
   this.totalDisplay = 0;
   allImages.push(this.path);
-  allProducts.push(this);
   productNames.push(this.name);
-}
-
-
-var allImages = [];
-
-new PageImage('item', 'item.jpg', 'id',allImages);
-
-function PageImage('itemName', 'Path', 'id', allImages) {
-
+  allProducts.push(this);
 }
 
 
 // TODO: Don't forget to build your objects. How can you do this withough having to write 14 lines of `new Product(., ., .)`?
 var bag = new Product('bag', 'bag.jpg' );
-console.log(allProducts);
 var banana = new Product('banana', 'banana.jpg');
+var bathroom = new Product('bathroom', 'bathroom.jpg');
+var boots = new Product('boots', 'boots.jpg');
+var breakfast = new Product('breakfast', 'breakfast.jpg');
+var bubblegum = new Product('bubblegum', 'bubblegum.jpg');
+var chair = new Product('chair', 'chair.jpg');
+var cthulhu = new Product('cthulhu', 'cthulhu.jpg');
+var dogDuck = new Product('dogDuck', 'dog-duck.jpg');
+var pen = new Product('pen', 'pen.jpg');
+var petSweep = new Product('petSweep', 'pet-sweep.jpg');
+var scissors = new Product('sissors', 'sissors.jpg');
+var shark = new Product('shark', 'shark.jpg');
+var sweep = new Product('sweep', 'sweep.jpg');
+var tauntaun = new Product('tauntaun', 'tauntaun.jpg');
+var unicorn = new Product('unicorn', 'unicorn.jpg');
+var usb = new Product('usb', 'usb.jpg');
+var waterCan = new Product('waterCan', 'water-can.jpg');
+var wineGlass = new Product('wineGlass', 'wine-glass.jpg')
 console.log(allProducts);
 
 var productRank = {
