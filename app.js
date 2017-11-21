@@ -65,5 +65,14 @@ var resultsMaker = {
     this.pic1.src = allProducts[picOne].path;
     this.pic2.src = allProducts[picTwo].path;
     this.pic3.src = allProducts[picThree].path;
-  }
+
+    this.pic1.id = allProducts[picOne].name;
+    this.pic2.id = allProducts[picTwo].name;
+    this.pic3.id = allProducts[picThree].name;
+
+    this.imagesEl.appendChild(this.picOne);
+    this.imagesEl.appendChild(this.picTwo);
+    this.imagesEl.appendChild(this.picThree);
+  },
+  
 }
