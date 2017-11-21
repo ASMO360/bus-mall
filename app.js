@@ -4,9 +4,10 @@ var allProducts = []; //this is where the objects are stored
 var productNames = []; // this will create my results list
 var allImages = []; //this will create an array of images
 
-function Product(name, path) {
+function Product(name, path) {  //this is my Constructor
   this.name = name;
   this.path = "img/" + path;
+  this.id = name + "Id"
   this.totalClick = 0;
   this.totalDisplay = 0;
   allImages.push(this.path);
@@ -14,8 +15,7 @@ function Product(name, path) {
   allProducts.push(this);
 }
 
-
-// TODO: Don't forget to build your objects. How can you do this withough having to write 14 lines of `new Product(., ., .)`?
+//Objects!
 var bag = new Product('bag', 'bag.jpg' );
 var banana = new Product('banana', 'banana.jpg');
 var bathroom = new Product('bathroom', 'bathroom.jpg');
@@ -36,6 +36,8 @@ var usb = new Product('usb', 'usb.jpg');
 var waterCan = new Product('waterCan', 'water-can.jpg');
 var wineGlass = new Product('wineGlass', 'wine-glass.jpg')
 console.log(allProducts);
+console.log(allImages);
+console.log(productNames);
 
 var productRank = {
   // TODO: All the properties of the object! What do you think you need? Try to write one piece at a time and make sure it does what you want before writing a little more.
@@ -47,12 +49,14 @@ var productRank = {
 
   displayImages: function() {
     var myImage = new Image(200,200);
-    myImage.src = this.path;
-    document.getByElementId
+    myImage.src = allProducts[getRandomIndex].path;
+    console.log(myImage.src);
+    var pic1EL = document.getByElementId('pic1')
+    pic1El.appendChild(myImage.src)
   },
 
   tallyClicks: function(elementId) {
-    this.totalClick +=
+
   },
 
   displayResults: function() {
@@ -64,7 +68,7 @@ var productRank = {
   },
 
   onClick: function() {
-    // TODO: Hmm... what's going to happen here?
+    this.totalClick += 1;
 };
 
 productRank.imageEls.addEventListener('click', productRank.onClick);
