@@ -21,11 +21,11 @@ function Product(name, path) {  //this is my Constructor
 
 //console.log(allProducts);   *this is for checking functionality
 var tracker = {
-  imagesEl: document.getElementById('images'),
+  imagesEl: document.getElementById('images'),     //grabbing the images and results id
   resultsEl: document.getElementById('results'),
-  clicks: 0,
+  clickcount : 0,
 
-  imageOne: document.createElement('img'),
+  imageOne: document.createElement('img'),       //traversing the DOM to send the pictures
   imageTwo: document.createElement('img'),
   imageThree: document.createElement('img'),
 
@@ -56,31 +56,27 @@ var tracker = {
     this.imagesEl.appendChild(this.imageTwo);
     allProducts[idTwo].displayed++;
     this.imagesEl.appendChild(this.imageThree);
-    allProducts[idThree].displayed++;
+    allProducts[idThree].displayed++;    //this added to the displayed counter
   },
 
   onClick: function(event) {
     console.log(event.target.id);
-
-    if(event.target.id === 'images') {
+    if (tracker.clickcount === 24) {
+      tracker.imagesEl.removeEventListener('click', tracker.onClick);
+    } else if (event.target.id === 'images') {
       console.log('no image clicked');
       return;
-    }else if  {
-
-    }{
-      tracker.click++
-
+    }else {
+      tracker.clickcount++;
+    }
       for(var i in allProducts) {
         if(event.target.id === allProducts[i].name) {
           allProducts[i].votes++;
         }
       }
-      console.log(allProducts);  //*commented out this is for testing purposes
+    //  console.log(allProducts);  *commented out this is for testing purposes
       tracker.displayImages();
     }
-  }
 };
-for(var j = 0; j < 15; j++) {
-  tracker.imagesEl.addEventListener('click', tracker.onClick);
-  tracker.displayImages();
-};
+tracker.imagesEl.addEventListener('click', tracker.onClick);
+tracker.displayImages();
