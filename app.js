@@ -1,75 +1,96 @@
 'use strict';
 
 var allProducts = []; //this is where the objects are stored
-var productNames = []; // this will create my results list
-var allImages = []; //this will create an array of images
+var productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'tauntaun', 'sweep', 'usb', 'unicorn', 'water-can', 'wine-glass'];
+
 
 function Product(name, path) {  //this is my Constructor
   this.name = name;
-  this.path = "img/" + path;
-  this.id = name + "Id"
-  this.totalClick = 0;
-  this.totalDisplay = 0;
-  allImages.push(this.path);
-  productNames.push(this.name);
+  this.path = "img/" + this.name + '.jpg';
+  this.votes = 0;
+  this.displayed = 0;
   allProducts.push(this);
 }
 
-//Objects!
-var bag = new Product('bag', 'bag.jpg' );
-var banana = new Product('banana', 'banana.jpg');
-var bathroom = new Product('bathroom', 'bathroom.jpg');
-var boots = new Product('boots', 'boots.jpg');
-var breakfast = new Product('breakfast', 'breakfast.jpg');
-var bubblegum = new Product('bubblegum', 'bubblegum.jpg');
-var chair = new Product('chair', 'chair.jpg');
-var cthulhu = new Product('cthulhu', 'cthulhu.jpg');
-var dogDuck = new Product('dogDuck', 'dog-duck.jpg');
-var pen = new Product('pen', 'pen.jpg');
-var petSweep = new Product('petSweep', 'pet-sweep.jpg');
-var scissors = new Product('sissors', 'sissors.jpg');
-var shark = new Product('shark', 'shark.jpg');
-var sweep = new Product('sweep', 'sweep.jpg');
-var tauntaun = new Product('tauntaun', 'tauntaun.jpg');
-var unicorn = new Product('unicorn', 'unicorn.jpg');
-var usb = new Product('usb', 'usb.jpg');
-var waterCan = new Product('waterCan', 'water-can.jpg');
-var wineGlass = new Product('wineGlass', 'wine-glass.jpg')
-console.log(allProducts);
-console.log(allImages);
-console.log(productNames);
+//Objects! created with 1 function!!! crazy
+(function() {
+  for(var i in productNames) {
+    new Product(productNames[i]);
+  }
+})();
 
-var productRank = {
-  // TODO: All the properties of the object! What do you think you need? Try to write one piece at a time and make sure it does what you want before writing a little more.
-  // NOTE: A-C-P reminder... Make very intentional and iterative changes to your code, and then A-C-P.
+//console.log(allProducts);   *this is for checking functionality
+var tracker = {
+  imagesEl: document.getElementById('images'),     //grabbing the images and results id
+  resultsEl: document.getElementById('results'),
+  clickcount : 0,    //to count how many times the program will run.
+
+
+
+
+
+
+  imageOne: document.createElement('img'),       //traversing the DOM to send the pictures
+  imageTwo: document.createElement('img'),
+  imageThree: document.createElement('img'),
 
   getRandomIndex: function() {
-    return Math.floor(Math.random() * (parseInt(allProducts.length) - 1) + 1);
+    return Math.floor(Math.random() * allProducts.length);
   },
 
   displayImages: function() {
-    var myImage = new Image(200,200);
-    myImage.src = allProducts[getRandomIndex].path;
-    console.log(myImage.src);
-    var pic1EL = document.getByElementId('pic1')
-    pic1El.appendChild(myImage.src)
+    var idOne = this.getRandomIndex();          //asigning a random number
+    var idTwo = this.getRandomIndex();
+    var idThree = this.getRandomIndex();
+
+    if(idOne === idTwo || idOne === idThree || idTwo === idThree) {
+      this.displayImages();
+      return;                     //This eliminated duplicatioon
+    }
+
+    this.imageOne.src = allProducts[idOne].path;      // asigning the images path
+    this.imageTwo.src = allProducts[idTwo].path;
+    this.imageThree.src = allProducts[idThree].path;
+
+    this.imageOne.id = allProducts[idOne].name;         // asigning the images id
+    this.imageTwo.id = allProducts[idTwo].name;
+    this.imageThree.id = allProducts[idThree].name;
+
+    this.imagesEl.appendChild(this.imageOne);            //adding images through the DOM
+    allProducts[idOne].displayed++;
+    this.imagesEl.appendChild(this.imageTwo);
+    allProducts[idTwo].displayed++;
+    this.imagesEl.appendChild(this.imageThree);
+    allProducts[idThree].displayed++;    //this added to the displayed counter
   },
 
-  tallyClicks: function(elementId) {
+  onClick: function(event) {
+    console.log(event.target.id);
+    if (tracker.clickcount === 24) {
+      tracker.imagesEl.removeEventListener('click', tracker.onClick);
 
-  },
+      ulEl: document.createElement('ul'),
+      resultsEl.appendChild(ulEl),
 
-  displayResults: function() {
-    // TODO: Hmm... what's going to happen here?
-  },
+      liEl: document.createElement('li'),
+      liEl.textcontent = allProducts[j].name  + " votes: " + allProducts[j].votes,
+      ulEl.appendChild(liEl),
 
-  showButton: function() {
-    // TODO: Hmm... what's going to happen here?
-  },
 
-  onClick: function() {
-    this.totalClick += 1;
+    } else if (event.target.id === 'images') {
+      console.log('no image clicked');
+      return;
+    }else {
+      tracker.clickcount++;
+    }
+      for(var i in allProducts) {
+        if(event.target.id === allProducts[i].name) {
+          allProducts[i].votes++;
+        }
+      }
+    //  console.log(allProducts);  *commented out this is for testing purposes
+      tracker.displayImages();
+    }
 };
-
-productRank.imageEls.addEventListener('click', productRank.onClick);
-productRank.displayImages();
+tracker.imagesEl.addEventListener('click', tracker.onClick);
+tracker.displayImages();
