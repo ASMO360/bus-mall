@@ -23,7 +23,12 @@ function Product(name, path) {  //this is my Constructor
 var tracker = {
   imagesEl: document.getElementById('images'),     //grabbing the images and results id
   resultsEl: document.getElementById('results'),
-  clickcount : 0,    //to count how many times the program will run.  
+  clickcount : 0,    //to count how many times the program will run.
+
+
+
+
+
 
   imageOne: document.createElement('img'),       //traversing the DOM to send the pictures
   imageTwo: document.createElement('img'),
@@ -63,6 +68,15 @@ var tracker = {
     console.log(event.target.id);
     if (tracker.clickcount === 24) {
       tracker.imagesEl.removeEventListener('click', tracker.onClick);
+
+      ulEl: document.createElement('ul'),
+      resultsEl.appendChild(ulEl),
+
+      liEl: document.createElement('li'),
+      liEl.textcontent = allProducts[j].name  + " votes: " + allProducts[j].votes,
+      ulEl.appendChild(liEl),
+
+
     } else if (event.target.id === 'images') {
       console.log('no image clicked');
       return;
