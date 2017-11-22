@@ -55,8 +55,11 @@ var tracker = {
     this.imageThree.id = allProducts[idThree].name;
 
     this.imagesEl.appendChild(this.imageOne);
+    allProducts[idOne].displayed++;
     this.imagesEl.appendChild(this.imageTwo);
+    allProducts[idTwo].displayed++;
     this.imagesEl.appendChild(this.imageThree);
+    allProducts[idThree].displayed++;
   },
 
   onClick: function(event) {
