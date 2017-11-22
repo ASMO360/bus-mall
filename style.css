@@ -1,15 +1,16 @@
-#photos {
+#images {
+  width: 75%;
   border-style: solid;
 }
 
-#pic1 {
-  border-style: dashed;
+img {
+  border-style: double;
+  position: relative;
+  width: 200px;
+  height: 200px;
 }
 
-#pic2 {
+#results {
   border-style: dashed;
-}
-
-#pic3 {
-  border-style: dashed;
+  column-count: 4;
 }
