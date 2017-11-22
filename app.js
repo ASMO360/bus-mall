@@ -23,7 +23,7 @@ function Product(name, path) {  //this is my Constructor
 var tracker = {
   imagesEl: document.getElementById('images'),     //grabbing the images and results id
   resultsEl: document.getElementById('results'),
-  clickcount : 0,
+  clickcount : 0,    //to count how many times the program will run.  
 
   imageOne: document.createElement('img'),       //traversing the DOM to send the pictures
   imageTwo: document.createElement('img'),
@@ -34,24 +34,24 @@ var tracker = {
   },
 
   displayImages: function() {
-    var idOne = this.getRandomIndex();
+    var idOne = this.getRandomIndex();          //asigning a random number
     var idTwo = this.getRandomIndex();
     var idThree = this.getRandomIndex();
 
     if(idOne === idTwo || idOne === idThree || idTwo === idThree) {
       this.displayImages();
-      return;
+      return;                     //This eliminated duplicatioon
     }
 
-    this.imageOne.src = allProducts[idOne].path;
+    this.imageOne.src = allProducts[idOne].path;      // asigning the images path
     this.imageTwo.src = allProducts[idTwo].path;
     this.imageThree.src = allProducts[idThree].path;
 
-    this.imageOne.id = allProducts[idOne].name;
+    this.imageOne.id = allProducts[idOne].name;         // asigning the images id
     this.imageTwo.id = allProducts[idTwo].name;
     this.imageThree.id = allProducts[idThree].name;
 
-    this.imagesEl.appendChild(this.imageOne);
+    this.imagesEl.appendChild(this.imageOne);            //adding images through the DOM
     allProducts[idOne].displayed++;
     this.imagesEl.appendChild(this.imageTwo);
     allProducts[idTwo].displayed++;
