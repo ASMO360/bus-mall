@@ -19,10 +19,7 @@ function Product(name, path) {  //this is my Constructor
   }
 })();
 
-console.log(allProducts);
-
-
-
+//console.log(allProducts);   *this is for checking functionality
 var tracker = {
   imagesEl: document.getElementById('images'),
   resultsEl: document.getElementById('results'),
@@ -68,18 +65,22 @@ var tracker = {
     if(event.target.id === 'images') {
       console.log('no image clicked');
       return;
-    }else {
-      tracker.clickcount++
+    }else if  {
+
+    }{
+      tracker.click++
 
       for(var i in allProducts) {
         if(event.target.id === allProducts[i].name) {
           allProducts[i].votes++;
         }
       }
-      console.log(allProducts);
+      console.log(allProducts);  //*commented out this is for testing purposes
       tracker.displayImages();
     }
   }
 };
-tracker.imagesEl.addEventListener('click', tracker.onClick);
-tracker.displayImages();
+for(var j = 0; j < 15; j++) {
+  tracker.imagesEl.addEventListener('click', tracker.onClick);
+  tracker.displayImages();
+};
