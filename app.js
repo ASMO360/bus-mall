@@ -7,9 +7,8 @@ var productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegu
 function Product(name, path) {  //this is my Constructor
   this.name = name;
   this.path = "img/" + this.name + '.jpg';
-  this.id = name + "Id"
-  this.totalClick = 0;
-  this.totalDisplay = 0;
+  this.votes = 0;
+  this.displayed = 0;
   allProducts.push(this);
 }
 
@@ -60,10 +59,24 @@ var tracker = {
     this.imagesEl.appendChild(this.imageThree);
   },
 
-  whenClick: function(event) {
+  onClick: function(event) {
     console.log(event.target.id);
-      }
-}
 
-tracker.imagesEl.addEventListener('click', tracker.whenClick);
+    if(event.target.id === 'images') {
+      console.log('no image clicked');
+      return;
+    }else {
+      tracker.clickcount++
+
+      for(var i in allProducts) {
+        if(event.target.id === allProducts[i].name) {
+          allProducts[i].votes++;
+        }
+      }
+      console.log(allProducts);
+      tracker.displayImages();
+    }
+  }
+};
+tracker.imagesEl.addEventListener('click', tracker.onClick);
 tracker.displayImages();
