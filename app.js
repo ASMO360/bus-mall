@@ -1,78 +1,69 @@
 'use strict';
 
 var allProducts = []; //this is where the objects are stored
-var productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'tauntaun', 'unicorn', 'water-can', 'wine-glass']; // this will create my results list
+var productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'tauntaun', 'sweep', 'usb', 'unicorn', 'water-can', 'wine-glass'];
 
 
 function Product(name, path) {  //this is my Constructor
   this.name = name;
-  this.path = "img/" + path;
+  this.path = "img/" + this.name + '.jpg';
   this.id = name + "Id"
   this.totalClick = 0;
   this.totalDisplay = 0;
   allProducts.push(this);
 }
 
-//Objects!
-var bag = new Product('bag', 'bag.jpg' );
-var banana = new Product('banana', 'banana.jpg');
-var bathroom = new Product('bathroom', 'bathroom.jpg');
-var boots = new Product('boots', 'boots.jpg');
-var breakfast = new Product('breakfast', 'breakfast.jpg');
-var bubblegum = new Product('bubblegum', 'bubblegum.jpg');
-var chair = new Product('chair', 'chair.jpg');
-var cthulhu = new Product('cthulhu', 'cthulhu.jpg');
-var dogDuck = new Product('dogDuck', 'dog-duck.jpg');
-var dragon = new Product('dragon','dragon.jpg')
-var pen = new Product('pen', 'pen.jpg');
-var petSweep = new Product('petSweep', 'pet-sweep.jpg');
-var scissors = new Product('sissors', 'sissors.jpg');
-var shark = new Product('shark', 'shark.jpg');
-var sweep = new Product('sweep', 'sweep.jpg');
-var tauntaun = new Product('tauntaun', 'tauntaun.jpg');
-var unicorn = new Product('unicorn', 'unicorn.jpg');
-var usb = new Product('usb', 'usb.jpg');
-var waterCan = new Product('waterCan', 'water-can.jpg');
-var wineGlass = new Product('wineGlass', 'wine-glass.jpg')
+//Objects! created with 1 function!!! crazy
+(function() {
+  for(var i in productNames) {
+    new Product(productNames[i]);
+  }
+})();
+
 console.log(allProducts);
-console.log(allImages);
-console.log(productNames);
 
 
-var resultsMaker = {
-  imagesEl: document.getElementById('photos'),
-  resultsEl: document.getElementById('stats'),
+
+var tracker = {
+  imagesEl: document.getElementById('images'),
+  resultsEl: document.getElementById('results'),
   clicks: 0,
 
-  pic1: new Image(),
-  pic2: new Image(),
-  pic3: new Image(),
+  imageOne: document.createElement('img'),
+  imageTwo: document.createElement('img'),
+  imageThree: document.createElement('img'),
 
   getRandomIndex: function() {
-    return Math.floor(Math.random() * (parseInt(allProducts.length) - 1) + 1);
+    return Math.floor(Math.random() * allProducts.length);
   },
 
   displayImages: function() {
-    var picOne = this.getRandomIndex();
-    var picTwo = this.getRandomIndex();
-    var picThree = this.getRandomIndex();
+    var idOne = this.getRandomIndex();
+    var idTwo = this.getRandomIndex();
+    var idThree = this.getRandomIndex();
 
-    if(picOne === picTwo || picOne === picThree || picTwo === picThree) {
+    if(idOne === idTwo || idOne === idThree || idTwo === idThree) {
       this.displayImages();
       return;
     }
 
-    this.pic1.src = allProducts[picOne].path;
-    this.pic2.src = allProducts[picTwo].path;
-    this.pic3.src = allProducts[picThree].path;
+    this.imageOne.src = allProducts[idOne].path;
+    this.imageTwo.src = allProducts[idTwo].path;
+    this.imageThree.src = allProducts[idThree].path;
 
-    this.pic1.id = allProducts[picOne].name;
-    this.pic2.id = allProducts[picTwo].name;
-    this.pic3.id = allProducts[picThree].name;
+    this.imageOne.id = allProducts[idOne].name;
+    this.imageTwo.id = allProducts[idTwo].name;
+    this.imageThree.id = allProducts[idThree].name;
 
-    this.imagesEl.appendChild(this.picOne);
-    this.imagesEl.appendChild(this.picTwo);
-    this.imagesEl.appendChild(this.picThree);
+    this.imagesEl.appendChild(this.imageOne);
+    this.imagesEl.appendChild(this.imageTwo);
+    this.imagesEl.appendChild(this.imageThree);
   },
-  
+
+  whenClick: function(event) {
+    console.log(event.target.id);
+      }
 }
+
+tracker.imagesEl.addEventListener('click', tracker.whenClick);
+tracker.displayImages();
