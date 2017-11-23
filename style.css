@@ -9,7 +9,7 @@ img {
   width: 200px;
   height: 200px;
 }
-#myChart {
+canvas {
   width: 50%;
   height: 50%;
   float:left;
