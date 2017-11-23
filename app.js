@@ -134,17 +134,10 @@ var tracker = {
           }
         }
       });
-
       for(var h = 0; h < allProducts.length; h++) {
         myChart.data.datasets[0].data[h] = allProducts[h].votes;
         myChart.data.labels[h] = allProducts[h].name;
       }
-
-
-
-
-
-
 
 
     } else if (event.target.id === 'images') {
