@@ -19,6 +19,16 @@ function Product(name) { //this is my Constructor
   }
 })();
 
+function populateStorage(){
+  var jsonStr = JSON.stringify(allProducts);
+  localStorage.setItem('stuff', jsonStr);
+}
+
+function pullStorage(){
+  var pull = localStorage.getItem('stuff');
+  JSON.parse(pull);
+}
+
 //console.log(allProducts);   *this is for checking functionality
 var tracker = {
   imagesEl: document.getElementById('images'), //grabbing the images and results id
@@ -134,18 +144,11 @@ var tracker = {
           }
         }
       });
-
       for(var h = 0; h < allProducts.length; h++) {
         myChart.data.datasets[0].data[h] = allProducts[h].votes;
         myChart.data.labels[h] = allProducts[h].name;
       }
-
-
-
-
-
-
-
+      populateStorage();
 
     } else if (event.target.id === 'images') {
       console.log('no image clicked');
