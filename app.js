@@ -24,10 +24,10 @@ function populateStorage(){
   localStorage.setItem('stuff', jsonStr);
 }
 
-//function pullStorage(){
-//  var pull = localStorage.getItem('stuff');
-//  JSON.parse(pull);
-//}
+function pullStorage(){
+  var pull = localStorage.getItem('stuff');
+  JSON.parse(pull);
+}
 
 //console.log(allProducts);   *this is for checking functionality
 var tracker = {
