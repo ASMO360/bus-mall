@@ -21,12 +21,7 @@ function Product(name) { //this is my Constructor
 
 function populateStorage(){
   var jsonStr = JSON.stringify(allProducts);
-  localStorage.setItem('stuff', jsonStr);
-}
-
-function pullStorage(){
-  var pull = localStorage.getItem('stuff');
-  JSON.parse(pull);
+  localStorage.setItem('allProducts', jsonStr);
 }
 
 //console.log(allProducts);   *this is for checking functionality
@@ -34,11 +29,6 @@ var tracker = {
   imagesEl: document.getElementById('images'), //grabbing the images and results id
   resultsEl: document.getElementById('results'),
   clickcount : 0, //to count how many times the program will run.
-
-
-
-
-
 
   imageOne: document.createElement('img'), //traversing the DOM to send the pictures
   imageTwo: document.createElement('img'),
@@ -78,6 +68,7 @@ var tracker = {
     console.log(event.target.id);
     if (tracker.clickcount === 15) { //Change this to 24
       tracker.imagesEl.removeEventListener('click', tracker.onClick);
+      allProducts.push(JSON.parse(localStorage.getItem('allProducts')));
 
       var ctx = document.getElementById('myChart').getContext('2d');
       var myChart = new Chart(ctx, {

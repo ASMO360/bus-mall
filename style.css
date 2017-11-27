@@ -1,6 +1,20 @@
+
+body {
+  background-color: #aa9c6d;
+}
+
+header {
+  margin: 0;
+  padding-left: 10px;
+  background-color: black;
+  color: #aa8a6d;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+
+
 #images {
-  width: 75%;
-  border-style: solid;
+  margin-left: 10%;
+
 }
 
 img {
@@ -8,14 +22,4 @@ img {
   position: relative;
   width: 200px;
   height: 200px;
-}
-canvas {
-  width: 50%;
-  height: 50%;
-  float:left;
-}
-
-#results {
-  border-style: dashed;
-  column-count: 4;
 }
