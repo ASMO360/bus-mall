@@ -3,7 +3,6 @@
 var allProducts = []; //this is where the objects are stored
 var productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'tauntaun', 'sweep', 'usb', 'unicorn', 'water-can', 'wine-glass'];
 
-
 function Product(name) { //this is my Constructor
   this.name = name;
   this.path = 'img/' + this.name + '.jpg';
@@ -12,7 +11,6 @@ function Product(name) { //this is my Constructor
   allProducts.push(this);
 }
 
-//Objects! created with 1 function!!! crazy
 (function() {
   for(var i in productNames) {
     new Product(productNames[i]);
@@ -21,18 +19,28 @@ function Product(name) { //this is my Constructor
 
 function populateStorage(){
   var jsonStr = JSON.stringify(allProducts);
-  localStorage.setItem('allProducts', jsonStr);
+  localStorage.setItem('allProductsLS', jsonStr);
 }
 
-//console.log(allProducts);   *this is for checking functionality
+function pullStorage(){
+  var allProductsLs = JSON.parse(localStorage.getItem('allProductsLS'));
+  console.log('allProducts from storage', allProductsLs);
+}
+
+pullStorage();
+
+
+
 var tracker = {
   imagesEl: document.getElementById('images'), //grabbing the images and results id
   resultsEl: document.getElementById('results'),
   clickcount : 0, //to count how many times the program will run.
 
-  imageOne: document.createElement('img'), //traversing the DOM to send the pictures
+  imageOne: document.createElement('img'),
   imageTwo: document.createElement('img'),
   imageThree: document.createElement('img'),
+
+
 
   getRandomIndex: function() {
     return Math.floor(Math.random() * allProducts.length);
@@ -66,18 +74,16 @@ var tracker = {
 
   onClick: function(event) {
     console.log(event.target.id);
-    if (tracker.clickcount === 15) { //Change this to 24
-      tracker.imagesEl.removeEventListener('click', tracker.onClick);
-      allProducts.push(JSON.parse(localStorage.getItem('allProducts')));
-
+    if (tracker.clickcount === 10) { //Change this to 24
+      populateStorage();
       var ctx = document.getElementById('myChart').getContext('2d');
       var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          labels: allProducts.map(function(x) {return x.name;}),
           datasets: [{
             label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            data: allProducts.map(function(x) {return x.votes;}),
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',
@@ -136,10 +142,10 @@ var tracker = {
         }
       });
       for(var h = 0; h < allProducts.length; h++) {
-        myChart.data.datasets[0].data[h] = allProducts[h].votes;
+        console.log(allProducts[h]);
         myChart.data.labels[h] = allProducts[h].name;
+        myChart.data.datasets[0].data[h] = allProducts[h].votes;
       }
-      populateStorage();
 
     } else if (event.target.id === 'images') {
       console.log('no image clicked');
