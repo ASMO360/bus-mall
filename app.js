@@ -27,7 +27,7 @@ function pullStorage(){
   console.log('allProducts from storage', allProductsLs);
 }
 
-pullStorage();
+//pullStorage();
 
 
 
@@ -75,7 +75,7 @@ var tracker = {
   onClick: function(event) {
     console.log(event.target.id);
     if (tracker.clickcount === 10) { //Change this to 24
-      populateStorage();
+      //populateStorage();
       var ctx = document.getElementById('myChart').getContext('2d');
       var myChart = new Chart(ctx, {
         type: 'bar',
