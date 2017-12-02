@@ -37,7 +37,6 @@ function pulledFromMemoryProduct(name, votes, displayed) {
 function initProducts() {
   var prodStats = loadProductStats();
 
-  debugger;
   function saveProductStats(){
     var jsonStr = JSON.stringify(allProducts);
     localStorage.setItem('allProductsLS', jsonStr);
@@ -45,9 +44,10 @@ function initProducts() {
 
   function loadProductStats(){
     var allProductsStr = localStorage.getItem('allProductsLS');
-    var allProductsLs = null;
+    var allProductsLs = null
+
     if (allProductsStr) {
-      var allProductsLs = JSON.parse(allProductsStr);
+      allProductsLs = JSON.parse(allProductsStr);
       console.log('allProducts from storage', allProductsLs);
     }
     return allProductsLs;
@@ -61,7 +61,6 @@ function initProducts() {
       pulledFromMemoryProduct(allProductsLs[locStorAllProd].name, allProductsLs[locStorAllProd].votes, allProductsLs[locStorAllProd].displayed);
     }
   } else {
-
     // when there is no stored data.
     for(var productIdx in productNames) {
       new Product(productNames[productIdx]);
