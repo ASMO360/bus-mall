@@ -1,9 +1,18 @@
 'use strict';
+const minReqVotes = 3; // for testing
+// const minReqVotes = 25; // for production
+
 
 var allProducts = []; //this is where the objects are stored
 var productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'tauntaun', 'sweep', 'usb', 'unicorn', 'water-can', 'wine-glass'];
 
-function Product(name) { //this is my Constructor
+
+function saveProductStats(){
+  var jsonStr = JSON.stringify(allProducts);
+  localStorage.setItem('allProductsLS', jsonStr);
+}
+
+function Product(name) {
   this.name = name;
   this.path = 'img/' + this.name + '.jpg';
   this.votes = 0;
@@ -11,25 +20,56 @@ function Product(name) { //this is my Constructor
   allProducts.push(this);
 }
 
+function pulledFromMemoryProduct(name, votes, displayed) {
+  this.name = name;
+  this.path = 'img/' + this.name + '.jpg';
+  this.votes = votes;
+  this.displayed = displayed;
+  allProducts.push(this);
+}
+/*********************************
 (function() {
-  for(var i in productNames) {
-    new Product(productNames[i]);
+  for(var productIdx in productNames) {
+    new Product(productNames[productIdx]);
   }
 })();
+********************************/
+function initProducts() {
+  var prodStats = loadProductStats();
 
-function populateStorage(){
-  var jsonStr = JSON.stringify(allProducts);
-  localStorage.setItem('allProductsLS', jsonStr);
+  debugger;
+  function saveProductStats(){
+    var jsonStr = JSON.stringify(allProducts);
+    localStorage.setItem('allProductsLS', jsonStr);
+  }
+
+  function loadProductStats(){
+    var allProductsStr = localStorage.getItem('allProductsLS');
+    var allProductsLs = null;
+    if (allProductsStr) {
+      var allProductsLs = JSON.parse(allProductsStr);
+      console.log('allProducts from storage', allProductsLs);
+    }
+    return allProductsLs;
+  }
+  prodStats = null; /////////////////////////////////
+  if(prodStats){
+    for(var locStorAllProd = 0; locStorAllProd < allProductsLs.length; locStorAllProd++){
+      var allProductsStr = localStorage.getItem('allProductsLS');
+      var allProductsLs = JSON.parse(allProductsStr);
+
+      pulledFromMemoryProduct(allProductsLs[locStorAllProd].name, allProductsLs[locStorAllProd].votes, allProductsLs[locStorAllProd].displayed);
+    }
+  } else {
+
+    // when there is no stored data.
+    for(var productIdx in productNames) {
+      new Product(productNames[productIdx]);
+    }
+  }
 }
 
-function pullStorage(){
-  var allProductsLs = JSON.parse(localStorage.getItem('allProductsLS'));
-  console.log('allProducts from storage', allProductsLs);
-}
-
-//pullStorage();
-
-
+initProducts();
 
 var tracker = {
   imagesEl: document.getElementById('images'), //grabbing the images and results id
@@ -71,96 +111,90 @@ var tracker = {
     this.imagesEl.appendChild(this.imageThree);
     allProducts[idThree].displayed++; //this added to the displayed counter
   },
-
-  onClick: function(event) {
-    console.log(event.target.id);
-    if (tracker.clickcount === 10) { //Change this to 24
-      //populateStorage();
-      var ctx = document.getElementById('myChart').getContext('2d');
-      var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: allProducts.map(function(x) {return x.name;}),
-          datasets: [{
-            label: '# of Votes',
-            data: allProducts.map(function(x) {return x.votes;}),
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)',
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)',
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-            ],
-            borderColor: [
-              'rgba(255,99,132,1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)',
-              'rgba(255,99,132,1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(255,99,132,1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)',
-              'rgba(255,99,132,1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)'
-            ],
-            borderWidth: 1
+  showChart : function() {
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: allProducts.map(function(x) {return x.name;}),
+        datasets: [{
+          label: '# of Votes',
+          data: allProducts.map(function(x) {return x.votes;}),
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+          ],
+          borderColor: [
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero:true
+            }
           }]
-        },
-        options: {
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero:true
-              }
-            }]
-          }
         }
-      });
-      for(var h = 0; h < allProducts.length; h++) {
-        console.log(allProducts[h]);
-        myChart.data.labels[h] = allProducts[h].name;
-        myChart.data.datasets[0].data[h] = allProducts[h].votes;
       }
-
+    });
+  },
+  onClickImages: function(event) {
+    console.log(event.target.id);
+    if (tracker.clickcount >= minReqVotes) {
+      this.showChart();
     } else if (event.target.id === 'images') {
       console.log('no image clicked');
-      return;
     }else {
       tracker.clickcount++;
-    }
-    for(var i in allProducts) {
-      if(event.target.id === allProducts[i].name) {
-        allProducts[i].votes++;
+      for(var curProdIdX = 0; curProdIdX < allProducts.length; curProdIdX++) {
+        if(event.target.id === allProducts[curProdIdX].name) {
+          ++allProducts[curProdIdX].votes;
+        }
+        saveProductStats();
       }
     }
-    //  console.log(allProducts);  *commented out this is for testing purposes
     tracker.displayImages();
   }
 };
-tracker.imagesEl.addEventListener('click', tracker.onClick);
+tracker.imagesEl.addEventListener('click', tracker.onClickImages.bind(tracker), false);
 tracker.displayImages();
