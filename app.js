@@ -20,11 +20,12 @@ function Product(name) {
   allProducts.push(this);
 }
 
-function pulledFromMemoryProduct(name, votes, displayed) {
-  this.name = name;
+
+function pulledFromMemoryProduct(lSName, lSVotes, lSDisplayed) {
+  this.name = lSName;
   this.path = 'img/' + this.name + '.jpg';
-  this.votes = votes;
-  this.displayed = displayed;
+  this.votes = lSVotes;
+  this.displayed = lSDisplayed;
   allProducts.push(this);
 }
 /*********************************
@@ -44,21 +45,23 @@ function initProducts() {
 
   function loadProductStats(){
     var allProductsStr = localStorage.getItem('allProductsLS');
-    var allProductsLs = null
-
+    var allProductsLs = null;
     if (allProductsStr) {
       allProductsLs = JSON.parse(allProductsStr);
       console.log('allProducts from storage', allProductsLs);
     }
     return allProductsLs;
   }
-  prodStats = null; /////////////////////////////////
+  //prodStats = null; /////////////////////////////////
   if(prodStats){
-    for(var locStorAllProd = 0; locStorAllProd < allProductsLs.length; locStorAllProd++){
+    debugger;
+    for(var i = 0; i < 20; i++){
       var allProductsStr = localStorage.getItem('allProductsLS');
       var allProductsLs = JSON.parse(allProductsStr);
-
-      pulledFromMemoryProduct(allProductsLs[locStorAllProd].name, allProductsLs[locStorAllProd].votes, allProductsLs[locStorAllProd].displayed);
+      console.log(allProductsLs[i].name);
+      console.log(allProductsLs[i].votes);
+      console.log(allProductsLs[i].displayed);
+      pulledFromMemoryProduct(allProductsLs[i].name, allProductsLs[i].votes, allProductsLs[i].displayed);
     }
   } else {
     // when there is no stored data.
@@ -195,5 +198,6 @@ var tracker = {
     tracker.displayImages();
   }
 };
+
 tracker.imagesEl.addEventListener('click', tracker.onClickImages.bind(tracker), false);
 tracker.displayImages();
