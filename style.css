@@ -7,10 +7,19 @@ header {
   margin: 0;
   padding-left: 10px;
   background-color: black;
-  color: #aa8a6d;
+  color: #A9C400;
   font-family: 'Barlow Condensed', sans-serif;
 }
 
+#logo {
+  
+}
+
+h3 {
+position: relative;
+margin-left: 28%;
+font-family: 'Barlow Condensed', sans-serif;
+}
 
 #images {
   margin-left: 10%;
@@ -22,4 +31,8 @@ img {
   position: relative;
   width: 200px;
   height: 200px;
+}
+
+canvas {
+  background-image: url();
 }
