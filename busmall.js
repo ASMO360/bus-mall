@@ -1,6 +1,6 @@
 'use strict';
-var clickNum = 3; // for testing
-//var clickNum = 25; // for production
+//var clickNum = 3; // for testing
+var clickNum = 25; // for production
 
 var lStorageGet = localStorage.getItem('allProductsLS');
 var allProductsLs = JSON.parse(lStorageGet);
@@ -143,11 +143,6 @@ var tracker = {
           }
         }
       });
-      for(var h = 0; h < allProducts.length; h++) {
-        myChart.data.labels[h] = allProducts[h].name;
-        myChart.data.datasets[0].data[h] = allProducts[h].votes;
-      }
-
     } else if (event.target.id === 'images') {
       console.log('no image clicked');
       return;
