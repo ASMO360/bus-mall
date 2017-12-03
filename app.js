@@ -2,8 +2,8 @@
 const minReqVotes = 3; // for testing
 // const minReqVotes = 25; // for production
 
-
-var allProducts = []; //this is where the objects are stored
+var allProductsFromStorage = []; //this is where the new objects are stored
+var allProducts = []; //this is where the new objects are stored
 var productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'tauntaun', 'sweep', 'usb', 'unicorn', 'water-can', 'wine-glass'];
 
 
@@ -20,21 +20,18 @@ function Product(name) {
   allProducts.push(this);
 }
 
-
-function pulledFromMemoryProduct(lSName, lSVotes, lSDisplayed) {
-  this.name = lSName;
+function pulledFromMemoryConstructor(name, votes, displayed) {
+  this.name = name;
   this.path = 'img/' + this.name + '.jpg';
-  this.votes = lSVotes;
-  this.displayed = lSDisplayed;
+  this.votes = votes;
+  this.displayed = displayed;
   allProducts.push(this);
 }
-/*********************************
-(function() {
-  for(var productIdx in productNames) {
-    new Product(productNames[productIdx]);
-  }
-})();
-********************************/
+
+Product.prototype.getName = function () {
+  return this.name;
+};
+
 function initProducts() {
   var prodStats = loadProductStats();
 
@@ -43,25 +40,22 @@ function initProducts() {
     localStorage.setItem('allProductsLS', jsonStr);
   }
 
-  function loadProductStats(){
-    var allProductsStr = localStorage.getItem('allProductsLS');
-    var allProductsLs = null;
-    if (allProductsStr) {
-      allProductsLs = JSON.parse(allProductsStr);
-      console.log('allProducts from storage', allProductsLs);
-    }
-    return allProductsLs;
-  }
+  // function loadProductStats(){
+  //   var allProductsStr = localStorage.getItem('allProductsLS');
+  //   var allProductsLs = JSON.parse(allProductsStr);
+  //   console.log('allProductsLs from storage', allProductsLs);
+  //   allProductsFromStorage.push(allProductsLs);
+  //   return allProductsLs;
+  // }
   //prodStats = null; /////////////////////////////////
   if(prodStats){
-    debugger;
-    for(var i = 0; i < 20; i++){
+    for (var i = 0; i < allProductsFromStorage.length; i++) {
       var allProductsStr = localStorage.getItem('allProductsLS');
       var allProductsLs = JSON.parse(allProductsStr);
-      console.log(allProductsLs[i].name);
-      console.log(allProductsLs[i].votes);
-      console.log(allProductsLs[i].displayed);
-      pulledFromMemoryProduct(allProductsLs[i].name, allProductsLs[i].votes, allProductsLs[i].displayed);
+      var lSName = allProductsLs[i].name;
+      var lSVotes =  allProductsLs[i].votes;
+      var lSDisplayed = allProductsLs[i].displayed;
+      pulledFromMemoryConstructor(lSName, lSVotes, lSDisplayed);
     }
   } else {
     // when there is no stored data.
