@@ -1,5 +1,5 @@
 'use strict';
-//var clickNum = 3; // for testing
+document.getElementById('myChart').style.display = 'none';
 var clickNum = 25; // for production
 
 var lStorageGet = localStorage.getItem('allProductsLS');
@@ -78,6 +78,7 @@ var tracker = {
   onClick: function(event) {
     console.log(event.target.id);
     if (tracker.clickcount === clickNum) {
+      document.getElementById('myChart').style.display = 'block';
       var ctx = document.getElementById('myChart').getContext('2d');
       var myChart = new Chart(ctx, {
         type: 'bar',

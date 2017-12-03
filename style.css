@@ -1,6 +1,6 @@
 
 body {
-  background-image: url('img/aBkgrnd.jpg');
+  background-image: url('img/abkgrnd2.jpg');
 }
 
 header {
@@ -33,6 +33,18 @@ img {
   height: 200px;
 }
 
-canvas {
-  background-image: url();
+#myChart {
+  margin: 10px;
+  background-color: black;
+}
+
+aside {
+  float: right;
+  background-color: black;
+  color: #A9C400;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 2em;
+  text-align: center;
+  width: 15%;
+  padding: 5px
 }
